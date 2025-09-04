@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/philip-edekobi/lzmk/pkg/compiler"
 	"github.com/philip-edekobi/lzmk/pkg/lexer"
@@ -10,14 +9,21 @@ import (
 )
 
 func main() {
-	fmt.Println("lzmk - Lazymark compiler (stub)")
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: lzmk [options] file...")
-		os.Exit(1)
-	}
+	// fmt.Println("lzmk - Lazymark compiler (stub)")
+	// if len(os.Args) < 2 {
+	// 	fmt.Println("Usage: lzmk [options] file...")
+	// 	os.Exit(1)
+	// }
 
-	input := "# Sample Lazymark\n\nHello World!"
-	tokens := lexer.Lex(input)
+	// input := "# Sample Lazymark\n\n## Sample Title Heading(hehe)\n\nBody consists of \"Hello World!\"\n#! (url)[alternative text details]\n\n### author Philip\n### date 2025-09-04"
+	input := "#! (https://url.com) [desc]"
+	l := lexer.NewLexer(input)
+	tokens, err := l.Lex()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(tokens)
+
 	ast := parser.Parse(tokens)
 	html := compiler.CompileHTML(ast)
 
