@@ -15,13 +15,14 @@ func main() {
 	// 	os.Exit(1)
 	// }
 
-	// input := "# Sample Lazymark\n\n## Sample Title Heading(hehe)\n\nBody consists of \"Hello World!\"\n#! (url)[alternative text details]\n\n### author Philip\n### date 2025-09-04"
-	input := "#! (https://url.com) [desc]"
+	input := "# Sample Lazymark\n\n## Sample Title Heading(hehe)\n\nBody consists of \"Hello World!\"\n#! (url)[alternative text details]\n\n### author Philip\n### date 2025-09-04"
+
 	l := lexer.NewLexer(input)
 	tokens, err := l.Lex()
 	if err != nil {
 		panic(err)
 	}
+
 	fmt.Println(tokens)
 
 	ast := parser.Parse(tokens)
