@@ -20,12 +20,12 @@ const (
 )
 
 type Token struct {
-	kind  TokenKind
-	value string
-	line  int
-	col   int
+	Kind  TokenKind
+	Value string
+	Line  int
+	Col   int
 }
 
 func (t *Token) String() string {
-	return fmt.Sprintf("TokenKind %v: %s at position (%d, %d)", t.kind, t.value, t.line, t.col)
+	return fmt.Sprintf("TokenKind %v: %s at position (%d, %d)", t.Kind, t.Value, t.Line, t.Col)
 }

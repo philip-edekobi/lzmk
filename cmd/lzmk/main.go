@@ -23,10 +23,20 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(tokens)
+	fmt.Println("TOKENS:", tokens)
 
-	ast := parser.Parse(tokens)
-	html := compiler.CompileHTML(ast)
+	p := parser.NewParser(tokens)
+	ast, err := p.Parse(tokens)
+	if err != nil {
+		panic(err)
+	}
 
-	fmt.Println(html)
+	fmt.Println("AST:", ast)
+
+	html, err := compiler.CompileHTML(ast)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("HTML:", html)
 }

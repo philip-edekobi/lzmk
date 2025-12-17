@@ -57,7 +57,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 				tokens = append(
 					tokens,
-					&Token{kind: NewLine, value: "\n", line: l.line - 1, col: col - 1},
+					&Token{Kind: NewLine, Value: "\n", Line: l.line - 1, Col: col - 1},
 				)
 			}
 			char = l.advance()
@@ -73,21 +73,21 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 					tokens = append(
 						tokens,
-						&Token{kind: MetaHash, value: "###", line: l.line, col: l.col - 3},
+						&Token{Kind: MetaHash, Value: "###", Line: l.line, Col: l.col - 3},
 					)
 				} else {
 					l.pos++
-					tokens = append(tokens, &Token{kind: HeaderHash, value: "##", line: l.line, col: l.col - 2})
+					tokens = append(tokens, &Token{Kind: HeaderHash, Value: "##", Line: l.line, Col: l.col - 2})
 				}
 			} else if l.peek() == '!' {
 				l.advance()
 
 				tokens = append(
 					tokens,
-					&Token{kind: HashBang, value: "#!", line: l.line, col: l.col - 2},
+					&Token{Kind: HashBang, Value: "#!", Line: l.line, Col: l.col - 2},
 				)
 			} else {
-				tokens = append(tokens, &Token{kind: TitleHash, value: "#", line: l.line, col: l.col - 1})
+				tokens = append(tokens, &Token{Kind: TitleHash, Value: "#", Line: l.line, Col: l.col - 1})
 			}
 
 		case '(':
@@ -95,7 +95,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 			tokens = append(
 				tokens,
-				&Token{kind: LeftParen, value: "(", line: l.line, col: l.col - 1},
+				&Token{Kind: LeftParen, Value: "(", Line: l.line, Col: l.col - 1},
 			)
 
 		case ')':
@@ -103,7 +103,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 			tokens = append(
 				tokens,
-				&Token{kind: RightParen, value: ")", line: l.line, col: l.col - 1},
+				&Token{Kind: RightParen, Value: ")", Line: l.line, Col: l.col - 1},
 			)
 
 		case '[':
@@ -111,7 +111,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 			tokens = append(
 				tokens,
-				&Token{kind: LeftBrace, value: "[", line: l.line, col: l.col - 1},
+				&Token{Kind: LeftBrace, Value: "[", Line: l.line, Col: l.col - 1},
 			)
 
 		case ']':
@@ -119,11 +119,11 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 			tokens = append(
 				tokens,
-				&Token{kind: RightBrace, value: "]", line: l.line, col: l.col - 1},
+				&Token{Kind: RightBrace, Value: "]", Line: l.line, Col: l.col - 1},
 			)
 
 		case 0:
-			tokens = append(tokens, &Token{kind: EOF, value: "", line: l.line, col: l.col - 1})
+			tokens = append(tokens, &Token{Kind: EOF, Value: "", Line: l.line, Col: l.col - 1})
 
 		default:
 			start := l.col
@@ -139,7 +139,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 				s += string(char)
 			}
 
-			tokens = append(tokens, &Token{kind: String, value: s, line: l.line, col: start - 1})
+			tokens = append(tokens, &Token{Kind: String, Value: s, Line: l.line, Col: start - 1})
 		}
 	}
 
