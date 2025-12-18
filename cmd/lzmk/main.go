@@ -23,7 +23,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("TOKENS:", tokens)
+	fmt.Println("TOKENS:\n", tokens)
 
 	p := parser.NewParser(tokens)
 	ast, err := p.Parse(tokens)
@@ -31,7 +31,8 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("AST:", ast)
+	fmt.Printf("\nAST:\n\n")
+	ast.PrettyPrint()
 
 	html, err := compiler.CompileHTML(ast)
 	if err != nil {
