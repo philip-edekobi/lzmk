@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title><!-- BLOG_TITLE --> Sample Lazymark</title>
+    <meta name="author" content="Philip Edekobi<!-- AUTHOR -->" />
+    <meta name="date" content="2025-12-26<!-- DATE -->" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ["JetBrains Mono", "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Theme bootstrap -->
+    <script>
+      const t = localStorage.getItem("theme");
+      if (
+        t === "dark" ||
+        (!t && matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+  </head>
+
+  <body
+    class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antialiased"
+  >
+    <!-- Header -->
+    <header class="border-b border-zinc-200 dark:border-zinc-800">
+      <div class="max-w-3xl mx-auto px-6 py-10">
+        <h1 class="text-3xl font-bold tracking-tight">
+          <!-- BLOG_TITLE -->
+          Sample Lazymark
+        </h1>
+
+        <p class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+          <span class="font-medium">Philip Edekobi<!-- AUTHOR --></span>
+          <time datetime="2025-12-26 <!-- ISO_DATE -->"
+            >2025-12-26<!-- HUMAN_DATE --></time
+          >
+        </p>
+      </div>
+    </header>
+
+    <!-- Article -->
+    <main class="max-w-3xl mx-auto px-6 py-16 space-y-16">
+      <!--
+      GENERATOR OUTPUT GOES HERE.
+      Fully styled Tailwind HTML.
+    -->
+
+      <!-- BLOG_CONTENT -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-200 dark:border-zinc-800">
+      <div
+        class="max-w-3xl mx-auto px-6 py-8 text-sm text-zinc-500 dark:text-zinc-400"
+      >
+        ©
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        <!-- AUTHOR -->
+        Philip Edekobi
+      </div>
+    </footer>
+
+    <!-- Theme toggle -->
+    <script>
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "t") {
+          const root = document.documentElement;
+          const dark = root.classList.toggle("dark");
+          localStorage.setItem("theme", dark ? "dark" : "light");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -15,7 +15,7 @@ func main() {
 	// 	os.Exit(1)
 	// }
 
-	input := "# Sample Lazymark\n\n## Sample Title Heading(hehe)\n\nBody consists of \"Hello World!\"\n#! (url)[alternative text details]\n\n### author Philip\n### date 2025-09-04"
+	input := "# Sample Lazymark(TITLE)\n\n## Sample Section Heading(hehe)\n\nBody consists of \"Hello World!\"\n This is a naturally occuring body which is highlited by a lot of html elements. Most of these are all about tactics and wisdom as a developer. Make you no go dey gbezome bro. \n#! (url)[alternative text details]\n\n### author Philip\n### date 2025-09-04"
 
 	fmt.Println(input)
 
@@ -35,6 +35,16 @@ func main() {
 
 	fmt.Printf("\nAST:\n\n")
 	ast.PrettyPrint()
+
+	_, authorOk := parser.MetaHashMap["author"]
+	if !authorOk {
+		panic("`author` missing in metadata")
+	}
+
+	_, dateOk := parser.MetaHashMap["date"]
+	if !dateOk {
+		panic("`date` missing in metadata")
+	}
 
 	html, err := codegen.GenerateHTML(ast)
 	if err != nil {

@@ -11,6 +11,8 @@ type Parser struct {
 	pos    int
 }
 
+var MetaHashMap = make(map[string]string)
+
 func NewParser(tokens []*lexer.Token) *Parser {
 	return &Parser{
 		tokens: tokens,

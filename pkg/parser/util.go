@@ -94,6 +94,8 @@ func (p *Parser) parseMetadata() *Node {
 	n := newNode(MetadataNode)
 	n.Metadata = MetadataInfo{Key: metaSubStrings[0], Value: metaSubStrings[1]}
 
+	MetaHashMap[n.Metadata.Key] = n.Metadata.Value
+
 	return n
 }
 
@@ -154,7 +156,11 @@ func (p *Parser) parseBody() (*Node, error) {
 			continue
 		}
 
-		return nil, fmt.Errorf("Failed to find any valid tokens")
+		return nil, fmt.Errorf(
+			"Error occured at %d:%d: failed to find any valid tokens",
+			p.peek().Line,
+			p.peek().Col,
+		)
 	}
 
 	return b, nil
