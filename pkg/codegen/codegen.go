@@ -1,6 +1,8 @@
 package codegen
 
-import "github.com/philip-edekobi/lzmk/pkg/parser"
+import (
+	"github.com/philip-edekobi/lzmk/pkg/parser"
+)
 
 func GenerateHTML(ast *parser.AST) (string, error) {
 	page, err := generatePageString(ast)

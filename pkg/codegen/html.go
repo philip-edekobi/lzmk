@@ -27,6 +27,10 @@ func generatePageString(ast *parser.AST) (string, error) {
 	}
 
 	for _, node := range root.Children[1].Children {
+		if node.Kind == parser.MetadataNode {
+			continue
+		}
+
 		genCode, err := generateHyperTextForNodeType(node)
 		if err != nil {
 			return page, err
@@ -49,9 +53,9 @@ func initializePage(page, title, author, date string) (string, error) {
 		return "", fmt.Errorf("Prior info already exists: possible page already initialized")
 	}
 
-	return page + "", nil
+	return page + generateInitalBoilerPlate(title, author, date), nil
 }
 
 func closePage(page, title, author, date string) string {
-	return page + ""
+	return page + generateClosingBoilerPlate(author, date)
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"  />
+
+        <title>Sample Lazymark(TITLE)</title>
+        <meta name="author" content="Philip" />
+        <meta name="date" content="2025-09-04" />
+
+        <!-- Tailwind CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <script>
+                tailwind.config = {
+                        darkMode: 'class',
+                        theme: {
+                                extend: {
+                                        fontFamily: {
+                                                mono: ['JetBrains Mono', 'monos
+pace'],
+                                        }
+                                }
+                        }
+                }
+        </script>
+
+        <!-- Theme bootstrap -->
+        <script>
+                const t = localstorage.getItem("theme");
+                if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: d
+ark)").matches)) {
+                        document.documentElement.classList.add("dark");
+                }
+        </script>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 antiali
+ased">
+
+        <!-- Header -->
+        <header class="border-b border-zinc-200 dark:border-zinc-800">
+                <div class="max-w-3xl mx-auto px-6 py-10">
+                        <h1 class="text-3xl font-bold tracking-tight">
+                                Sample Lazymark(TITLE)
+                        </h1>
+
+                        <p>
+                                <span class="font-medium">Philip</span> .
+                                <time datetime="2025-09-04T00:00:00Z">2025-09-0
+4</time>
+                        </p>
+                </div>
+        </header>
+
+        <!-- Article -->
+        <main class="max-w-3xl mx-auto px-6 py-16 space-y-16">
+        <p class="text-base leading-7 text-zinc-700 dark:text-zinc-300">Sampl
+e Section Heading(hehe)</p>
+<p class="text-base leading-7 text-zinc-700 dark:text-zinc-300">Body consists
+ of "Hello World!"</p>
+<p class="text-base leading-7 text-zinc-700 dark:text-zinc-300">This is a nat
+urally occuring body which is highlited by a lot of html elements. Most of th
+ese are all about tactics and wisdom as a developer. Make you no go dey gbezo
+me bro. </p>
+<img src="url" alt="alternative text details" class="w-full max-w-full rounde
+d-lg border border-zinc-200 dark:border-zinc-800" />
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-zinc-200 dark:border-zinc-800">
+        <div class="max-w-3xl mx-auto px-6 py-8 text-sm text-zinc-500 dark:te
+xt-zinc-400">
+                        &copy; 2025 Philip
+                </div>
+        </footer>
+
+        <!-- Theme toggle -->
+        <script>
+                document.addEventListener("keydown", e => {
+                        if (e.key === "t") {
+                                const root = document.documentElement;
+                                const dark = root.classList.toggle("dark");
+                                localStorage.setItem("theme", dark ? "dark" :
+ "light");
+                        }
+                })
+        </script>
+
+</body>
+</html>
+
