@@ -10,22 +10,22 @@ import (
 func generateHyperTextForNodeType(node *parser.Node) (string, error) {
 	switch node.Kind {
 	case parser.HeadingNode:
-		return generateHeading(node), nil
+		return "\n\t\t" + generateHeading(node), nil
 	case parser.TextNode:
-		return generateParagraph(node), nil
+		return "\n\t\t" + generateParagraph(node), nil
 	case parser.URLNode:
-		return generateImgUrl(node), nil
+		return "\n\t\t" + generateImgUrl(node), nil
 	default:
 		return "", fmt.Errorf("found invalid node type")
 	}
 }
 
 func generateHeading(node *parser.Node) string {
-	return fmt.Sprintf("<h2 class=\"text-xl sm:text-2xl font-semibold tracking-tight\">%s</h2>\n", node.Value())
+	return fmt.Sprintf("<h2 class=\"text-xl sm:text-2xl font-semibold tracking-tight\">%s</h2>", node.Value())
 }
 
 func generateParagraph(node *parser.Node) string {
-	return fmt.Sprintf("<p class=\"text-base leading-7 text-zinc-700 dark:text-zinc-300\">%s</p>\n", node.Value())
+	return fmt.Sprintf("<p class=\"text-base leading-7 text-zinc-700 dark:text-zinc-300\">%s</p>", node.Value())
 }
 
 func generateImgUrl(node *parser.Node) string {

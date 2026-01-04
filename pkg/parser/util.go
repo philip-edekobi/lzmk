@@ -18,7 +18,7 @@ func (p *Parser) parseHeader() *Node {
 		return nil
 	}
 
-	n := newNode(TextNode)
+	n := newNode(HeadingNode)
 	n.StringValue = headerToken.Value
 
 	return n
