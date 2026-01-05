@@ -6,8 +6,10 @@ import (
 	"github.com/philip-edekobi/lzmk/pkg/parser"
 )
 
-func generatePageString(ast *parser.AST) (string, error) {
+func generatePageString(ast *parser.AST, metaHashMap map[string]string) (string, error) {
 	page := ""
+	author := metaHashMap["author"]
+	date := metaHashMap["date"]
 
 	root := ast.Root
 	if len(root.Children) != 2 {
@@ -19,8 +21,8 @@ func generatePageString(ast *parser.AST) (string, error) {
 	page, err := initializePage(
 		page,
 		title,
-		parser.MetaHashMap["author"],
-		parser.MetaHashMap["date"],
+		author,
+		date,
 	)
 	if err != nil {
 		return "", err
@@ -41,8 +43,8 @@ func generatePageString(ast *parser.AST) (string, error) {
 
 	page = closePage(page,
 		title,
-		parser.MetaHashMap["author"],
-		parser.MetaHashMap["date"],
+		author,
+		date,
 	)
 
 	return page, nil

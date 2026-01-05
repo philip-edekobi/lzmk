@@ -4,8 +4,8 @@ import (
 	"github.com/philip-edekobi/lzmk/pkg/parser"
 )
 
-func GenerateHTML(ast *parser.AST) (string, error) {
-	page, err := generatePageString(ast)
+func GenerateHTML(ast *parser.AST, metadata map[string]string) (string, error) {
+	page, err := generatePageString(ast, metadata)
 	if err != nil {
 		return "", err
 	}

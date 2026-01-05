@@ -94,7 +94,7 @@ func (p *Parser) parseMetadata() *Node {
 	n := newNode(MetadataNode)
 	n.Metadata = MetadataInfo{Key: metaSubStrings[0], Value: metaSubStrings[1]}
 
-	MetaHashMap[n.Metadata.Key] = n.Metadata.Value
+	p.MetaHashMap[n.Metadata.Key] = n.Metadata.Value
 
 	return n
 }

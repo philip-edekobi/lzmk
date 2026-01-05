@@ -7,16 +7,16 @@ import (
 )
 
 type Parser struct {
-	tokens []*lexer.Token
-	pos    int
+	tokens      []*lexer.Token
+	pos         int
+	MetaHashMap map[string]string
 }
-
-var MetaHashMap = make(map[string]string)
 
 func NewParser(tokens []*lexer.Token) *Parser {
 	return &Parser{
-		tokens: tokens,
-		pos:    0,
+		tokens:      tokens,
+		pos:         0,
+		MetaHashMap: make(map[string]string),
 	}
 }
 
@@ -40,13 +40,13 @@ func (p *Parser) peek() *lexer.Token {
 func (p *Parser) consumeToken(tokenKind lexer.TokenKind) (*lexer.Token, error) {
 	nextToken := p.peek()
 	if nextToken.Kind != tokenKind {
-		return nil, fmt.Errorf("syntax error on %d:%d", nextToken.Line, nextToken.Col)
+		return nil, fmt.Errorf("syntax error on %d:%d\nexpected %v, got %v", nextToken.Line, nextToken.Col, tokenKind, nextToken.Kind)
 	}
 
 	return p.advance(), nil
 }
 
-func (p *Parser) Parse(input []*lexer.Token) (*AST, error) {
+func (p *Parser) Parse() (*AST, error) {
 	root := newNode(RootNode)
 	root.StringValue = "ROOT"
 	ast := newAST(root)

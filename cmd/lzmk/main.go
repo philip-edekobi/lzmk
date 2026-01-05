@@ -28,7 +28,7 @@ func main() {
 	fmt.Println("TOKENS:\n", tokens)
 
 	p := parser.NewParser(tokens)
-	ast, err := p.Parse(tokens)
+	ast, err := p.Parse()
 	if err != nil {
 		panic(err)
 	}
@@ -36,17 +36,17 @@ func main() {
 	fmt.Printf("\nAST:\n\n")
 	ast.PrettyPrint()
 
-	_, authorOk := parser.MetaHashMap["author"]
+	_, authorOk := p.MetaHashMap["author"]
 	if !authorOk {
 		panic("`author` missing in metadata")
 	}
 
-	_, dateOk := parser.MetaHashMap["date"]
+	_, dateOk := p.MetaHashMap["date"]
 	if !dateOk {
 		panic("`date` missing in metadata")
 	}
 
-	html, err := codegen.GenerateHTML(ast)
+	html, err := codegen.GenerateHTML(ast, p.MetaHashMap)
 	if err != nil {
 		panic(err)
 	}
