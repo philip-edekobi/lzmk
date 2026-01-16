@@ -30,8 +30,27 @@ func (p *Parser) parseString() *Node {
 		return nil
 	}
 
+	tails := []*lexer.Token{}
+	for {
+		_, err := p.consumeToken(lexer.NewLine)
+		if err != nil {
+			break
+		}
+
+		strToken, err := p.consumeToken(lexer.String)
+		if err != nil {
+			break
+		}
+
+		tails = append(tails, strToken)
+	}
+
 	n := newNode(TextNode)
 	n.StringValue = stringToken.Value
+
+	for _, tailToken := range tails {
+		n.StringValue += "<br>\n" + tailToken.Value
+	}
 
 	return n
 }
