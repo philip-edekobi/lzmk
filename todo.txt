@@ -1,7 +1,5 @@
 implement progressive enhancement for videos
 
-implement embeded links in text(open external links in new tab and internal links in same tab)
-
 implement command line feature
 
 add code blocks

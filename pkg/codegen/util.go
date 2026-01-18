@@ -2,6 +2,8 @@ package codegen
 
 import (
 	"fmt"
+	"net/url"
+	"regexp"
 	"strings"
 	"time"
 
@@ -31,7 +33,7 @@ func generateHeading(node *parser.Node) string {
 }
 
 func generateParagraph(node *parser.Node) string {
-	return fmt.Sprintf("<p class=\"text-base leading-7 text-zinc-700 dark:text-zinc-300\">%s</p>", node.Value())
+	return fmt.Sprintf("<p class=\"text-base leading-7 text-zinc-700 dark:text-zinc-300\">%s</p>", parseLinksInText(node.Value()))
 }
 
 func generateMediaUrl(node *parser.Node) (string, error) {
@@ -66,4 +68,44 @@ func getYear(dateStr string) int {
 	}
 
 	return t.Year()
+}
+
+func isExternalLink(link string) bool {
+	u, err := url.Parse(link)
+	if err != nil {
+		return false
+	}
+
+	if u.Host != "" {
+		return true
+	}
+
+	if strings.HasPrefix(link, "//") {
+		return true
+	}
+
+	if u.Scheme != "" {
+		return true
+	}
+
+	return false
+}
+
+func parseLinksInText(text string) string {
+	re := regexp.MustCompile(`\[([^\]]+)\]\(([^)]+)\)`)
+
+	return re.ReplaceAllStringFunc(text, func(match string) string {
+		submatches := re.FindStringSubmatch(match)
+		if len(submatches) < 3 {
+			return match
+		}
+		alt := submatches[1]
+		url := submatches[2]
+
+		if isExternalLink(url) {
+			return fmt.Sprintf("<a target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300\" href=\"%s\">%s</a>\n", url, alt)
+		}
+
+		return fmt.Sprintf("<a class=\"font-medium text-blue-600 dark:text-blue-400 underline underline-offset-4 hover:text-blue-700 dark:hover:text-blue-300\" href=\"%s\">%s</a>\n", url, alt)
+	})
 }
