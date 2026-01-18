@@ -55,23 +55,13 @@ func (p *Parser) parseString() *Node {
 	return n
 }
 
-func (p *Parser) parseURL() *Node {
+func (p *Parser) parseMedia() *Node {
 	_, err := p.consumeToken(lexer.HashBang)
 	if err != nil {
 		return nil
 	}
 
-	_, err = p.consumeToken(lexer.LeftParen)
-	if err != nil {
-		return nil
-	}
-
-	urlToken, err := p.consumeToken(lexer.String)
-	if err != nil {
-		return nil
-	}
-
-	_, err = p.consumeToken(lexer.RightParen)
+	mediaType, err := p.consumeToken(lexer.String)
 	if err != nil {
 		return nil
 	}
@@ -91,8 +81,23 @@ func (p *Parser) parseURL() *Node {
 		return nil
 	}
 
-	n := newNode(URLNode)
-	n.URLData = URLInfo{URL: urlToken.Value, AltText: altTextToken.Value}
+	_, err = p.consumeToken(lexer.LeftParen)
+	if err != nil {
+		return nil
+	}
+
+	urlToken, err := p.consumeToken(lexer.String)
+	if err != nil {
+		return nil
+	}
+
+	_, err = p.consumeToken(lexer.RightParen)
+	if err != nil {
+		return nil
+	}
+
+	n := newNode(MediaNode)
+	n.MediaData = MediaInfo{URL: urlToken.Value, AltText: altTextToken.Value, MediaType: mediaType.Value}
 
 	return n
 }
@@ -163,9 +168,9 @@ func (p *Parser) parseBody() (*Node, error) {
 			continue
 		}
 
-		urlNode := p.parseURL()
-		if urlNode != nil {
-			b.Children = append(b.Children, urlNode)
+		mediaNode := p.parseMedia()
+		if mediaNode != nil {
+			b.Children = append(b.Children, mediaNode)
 			continue
 		}
 

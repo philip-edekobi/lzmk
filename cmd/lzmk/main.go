@@ -15,7 +15,7 @@ func main() {
 	// 	os.Exit(1)
 	// }
 
-	input := "# Sample Lazymark(TITLE)\n\n## Sample Section Heading(hehe)\n\nBody consists of \"Hello World!\"\n This is a naturally occuring body which is highlited by a lot of html elements. Most of these are all about tactics and wisdom as a developer. Make you no go dey gbezome bro.\n\nNew Paragraph and new `p` elem. Let us test this and witness unparalleled glory.\n#! (https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiexHH8GpU3_5mCfBoqxb3gm4qxPEtmrN2ng&s)[Thinkpad laptop]\n### author Philip\n### date 2025-09-04"
+	input := "# Sample Lazymark(TITLE)\n\n## Sample Section Heading(hehe)\n\nBody consists of \"Hello World!\"\nThis is a naturally occuring body which is highlited by a lot of html elements. Most of these are all about tactics and wisdom as a developer. Make you no go dey gbezome bro.\n\nNew Paragraph and new `p` elem. Let us test this and witness unparalleled glory.\nOh and finally one dope novel I'm reading rn is [ISSTH](https://novelbin.com/b/i-shall-seal-the-heavens)\n#! img [Thinkpad laptop](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiexHH8GpU3_5mCfBoqxb3gm4qxPEtmrN2ng&s)\n#!vid[Random YT Video](https://www.youtube.com/watch?v=3BFTio5296w) \n### author Philip\n### date 2025-09-04"
 
 	fmt.Println(input)
 

@@ -5,24 +5,26 @@ import (
 )
 
 type Lexer struct {
-	source  []rune
-	start   int
-	pos     int
-	col     int
-	line    int
-	inParen bool
-	inBrace bool
+	source           []rune
+	start            int
+	pos              int
+	col              int
+	line             int
+	inParen          bool
+	inBrace          bool
+	seekingMediaType bool
 }
 
 func NewLexer(input string) *Lexer {
 	return &Lexer{
-		source:  []rune(input),
-		start:   0,
-		pos:     0,
-		line:    1,
-		col:     1,
-		inParen: false,
-		inBrace: false,
+		source:           []rune(input),
+		start:            0,
+		pos:              0,
+		line:             1,
+		col:              1,
+		inParen:          false,
+		inBrace:          false,
+		seekingMediaType: false,
 	}
 }
 
@@ -86,6 +88,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 					tokens,
 					&Token{Kind: HashBang, Value: "#!", Line: l.line, Col: l.col - 2},
 				)
+				l.seekingMediaType = true
 			} else {
 				tokens = append(tokens, &Token{Kind: TitleHash, Value: "#", Line: l.line, Col: l.col - 1})
 			}
@@ -108,6 +111,7 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 		case '[':
 			l.inBrace = true
+			l.seekingMediaType = false
 
 			tokens = append(
 				tokens,
@@ -127,17 +131,20 @@ func (l *Lexer) Lex() ([]*Token, error) {
 
 		default:
 			start := l.col
-			s := string(char)
+			chars := []rune{char}
+			// s := string(char)
 
 			for {
 				if l.peek() == 0 || l.peek() == '\n' || (l.peek() == ')' && l.inParen) ||
-					(l.peek() == ']' && l.inBrace) {
+					(l.peek() == ']' && l.inBrace) || (l.peek() == '[' && l.seekingMediaType) {
 					break
 				}
 
 				char = l.advance()
-				s += string(char)
+				chars = append(chars, char)
 			}
+
+			s := string(chars)
 
 			tokens = append(tokens, &Token{Kind: String, Value: s, Line: l.line, Col: start - 1})
 		}

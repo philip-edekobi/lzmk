@@ -2,6 +2,7 @@ package codegen
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/philip-edekobi/lzmk/pkg/parser"
@@ -13,8 +14,13 @@ func generateHyperTextForNodeType(node *parser.Node) (string, error) {
 		return "\n\t\t" + generateHeading(node), nil
 	case parser.TextNode:
 		return "\n\t\t" + generateParagraph(node), nil
-	case parser.URLNode:
-		return "\n\t\t" + generateImgUrl(node), nil
+	case parser.MediaNode:
+		mediaMarkup, err := generateMediaUrl(node)
+		if err != nil {
+			return "", err
+		}
+
+		return "\n\t\t" + mediaMarkup, nil
 	default:
 		return "", fmt.Errorf("found invalid node type")
 	}
@@ -28,8 +34,16 @@ func generateParagraph(node *parser.Node) string {
 	return fmt.Sprintf("<p class=\"text-base leading-7 text-zinc-700 dark:text-zinc-300\">%s</p>", node.Value())
 }
 
-func generateImgUrl(node *parser.Node) string {
-	return fmt.Sprintf("<img src=\"%s\" alt=\"%s\" class=\"w-full max-w-full rounded-lg border border-zinc-200 dark:border-zinc-800\" />\n", node.URLData.URL, node.URLData.AltText)
+func generateMediaUrl(node *parser.Node) (string, error) {
+	switch strings.Trim(node.MediaData.MediaType, " \n") {
+	case "vid":
+		return fmt.Sprintf("<video controls class=\"w-full rounded-lg border border-zinc-200 dark:border-zinc-800\">\n\t\t\t<source src=\"%s\" />\n\t\t</video>\n", node.MediaData.URL), nil
+	case "img":
+		return fmt.Sprintf("<img src=\"%s\" alt=\"%s\" class=\"w-full max-w-full rounded-lg border border-zinc-200 dark:border-zinc-800\" />\n", node.MediaData.URL, node.MediaData.AltText), nil
+	default:
+		fmt.Println("PROBLEMATIC NODE:", node)
+		return "", fmt.Errorf("invalid media type")
+	}
 }
 
 func convertDateToIsoTime(dateStr string) string {

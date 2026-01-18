@@ -15,12 +15,13 @@ const (
 	HeadingNode
 	TextNode
 	MetadataNode
-	URLNode
+	MediaNode
 )
 
-type URLInfo struct {
-	AltText string
-	URL     string
+type MediaInfo struct {
+	AltText   string
+	URL       string
+	MediaType string
 }
 
 type MetadataInfo struct {
@@ -31,7 +32,7 @@ type MetadataInfo struct {
 type Node struct {
 	Kind        NodeType
 	StringValue string
-	URLData     URLInfo
+	MediaData   MediaInfo
 	Metadata    MetadataInfo
 	Children    []*Node
 }
@@ -43,13 +44,14 @@ func (n *Node) Value() string {
 func (n *Node) prettyPrint(prefix string) {
 	pretabs := prefix + "\t"
 
-	if n.Kind == URLNode {
+	if n.Kind == MediaNode {
 		fmt.Printf(
-			"%sNodeType %v->(url:%s), (alt:%s))\n",
+			"%s%sNodeType %v->(url:%s), (alt:%s))\n",
 			pretabs,
+			n.MediaData.MediaType,
 			n.Kind,
-			n.URLData.URL,
-			n.URLData.AltText,
+			n.MediaData.URL,
+			n.MediaData.AltText,
 		)
 	} else if n.Kind == MetadataNode {
 		fmt.Printf(
